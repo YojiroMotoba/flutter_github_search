@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github_search/presentation/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'di.dart';
+
 void main() {
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      overrides: overrides,
+      child: const MyApp(),
     ),
   );
 }
