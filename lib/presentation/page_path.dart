@@ -1,3 +1,3 @@
-class PageInfo {
+class PagePath {
   static const String githubSearch = '/';
 }
