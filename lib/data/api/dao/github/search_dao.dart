@@ -15,7 +15,7 @@ class SearchDao extends GithubApiDio implements SearchRepository {
       queryParameters: <String, dynamic>{
         'q': query,
         'page': page,
-        'per_page': 100,
+        'per_page': 30,
       },
     );
     return SearchRepositoriesModel.fromJson(response.data!);

@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_github_search/presentation/view_model/async_github_search_page_view_model.dart';
+import 'package:flutter_github_search/presentation/view_model/github_search_page_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './../widgets/search_bar.dart' as search_bar;
 import '../../data/model/github/search_repository_item_model.dart';
 import '../../image_cache_manager.dart';
+
+final _queryProvider = StateProvider((ref) => '');
 
 class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
@@ -16,9 +18,7 @@ class GithubSearchPage extends ConsumerWidget {
     return Scaffold(
       appBar: search_bar.SearchBar(
         onSubmitted: (String query) {
-          ref
-              .read(asyncGithubSearchPageViewModelProvider.notifier)
-              .firstLoading(query);
+          ref.watch(_queryProvider.notifier).state = query;
         },
       ),
       body: const _Body(),
@@ -31,15 +31,34 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(asyncGithubSearchPageViewModelProvider
-        .select((value) => value.isLoading));
-    final viewModel = ref.read(asyncGithubSearchPageViewModelProvider.notifier);
-    if (viewModel.isFirstLoading()) {
+    final query = ref.watch(_queryProvider);
+    if (query.isEmpty) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: Text('Please enter a search term'),
       );
     }
-    return const _GithubRepositoryList();
+    return ref
+        .watch(
+          fetchRepositoriesProvider(
+            query: query,
+            page: 1,
+          ),
+        )
+        .when(
+          data: (_) {
+            return const _GithubRepositoryList();
+          },
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) {
+            debugPrint('error: $error');
+            debugPrint('stackTrace: $stackTrace');
+            return const Center(
+              child: Text('error'),
+            );
+          },
+        );
   }
 }
 
@@ -48,12 +67,38 @@ class _GithubRepositoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items =
-        ref.read(asyncGithubSearchPageViewModelProvider).value?.items ??
-            List<SearchRepositoryItemModel>.empty();
+    final items = ref.watch(githubSearchPageState
+        .select((value) => value.searchRepositoriesModel.items));
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
+        if (index == items.length - 1) {
+          return ref
+              .watch(
+                fetchRepositoriesProvider(
+                  query: ref.watch(_queryProvider),
+                  page: ref.watch(
+                    githubSearchPageState
+                        .select((value) => value.currentPage + 1),
+                  ),
+                ),
+              )
+              .when(
+                data: (_) {
+                  return const SizedBox.shrink();
+                },
+                error: (error, stackTrace) {
+                  debugPrint('error: $error');
+                  debugPrint('stackTrace: $stackTrace');
+                  return const Center(
+                    child: Text('error'),
+                  );
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+        }
         final item = items[index];
         return _ListViewItem(
           searchRepositoryItemModel: item,
