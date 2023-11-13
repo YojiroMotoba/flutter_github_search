@@ -13,6 +13,9 @@ class AsyncGithubSearchPageViewModel extends _$AsyncGithubSearchPageViewModel {
   }
 
   Future<void> search(String query) async {
+    if (state.isLoading) {
+      return;
+    }
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       return await ref.read(searchRepository).repositories(query: query);

@@ -1,5 +1,4 @@
 import 'package:flutter_github_search/data/api/api_path.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../model/github/search_repositories_model.dart';
 import '../../../repository/search_repository.dart';
