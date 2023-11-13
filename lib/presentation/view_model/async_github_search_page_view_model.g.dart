@@ -7,7 +7,7 @@ part of 'async_github_search_page_view_model.dart';
 // **************************************************************************
 
 String _$asyncGithubSearchPageViewModelHash() =>
-    r'c6612a492e70b4d76f0e745a193862c6c9f3f960';
+    r'f129b2aeb147131e0bd526dcd22e7b2ed6519686';
 
 /// See also [AsyncGithubSearchPageViewModel].
 @ProviderFor(AsyncGithubSearchPageViewModel)
