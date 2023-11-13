@@ -18,7 +18,7 @@ class GithubSearchPage extends ConsumerWidget {
         onSubmitted: (String query) {
           ref
               .read(asyncGithubSearchPageViewModelProvider.notifier)
-              .search(query);
+              .firstLoading(query);
         },
       ),
       body: const _Body(),
@@ -31,8 +31,10 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(asyncGithubSearchPageViewModelProvider);
-    if (viewModel.isLoading && viewModel.value!.items.isEmpty) {
+    ref.watch(asyncGithubSearchPageViewModelProvider
+        .select((value) => value.isLoading));
+    final viewModel = ref.read(asyncGithubSearchPageViewModelProvider.notifier);
+    if (viewModel.isFirstLoading()) {
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -46,8 +48,9 @@ class _GithubRepositoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(asyncGithubSearchPageViewModelProvider
-        .select((value) => value.value!.items));
+    final items =
+        ref.read(asyncGithubSearchPageViewModelProvider).value?.items ??
+            List<SearchRepositoryItemModel>.empty();
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
