@@ -82,7 +82,12 @@ class _GithubRepositoryList extends ConsumerWidget {
                 ),
               )
               .when(
-                loading: () => const _Loading(),
+                loading: () => Column(
+                  children: [
+                    listViewItem,
+                    const _Loading(),
+                  ],
+                ),
                 data: (_) => listViewItem,
                 error: (error, stackTrace) {
                   debugPrint('error: $error');

@@ -16,11 +16,14 @@ Future<void> fetchRepositories(
         query: query,
         page: page,
       );
+  if (page == 1) {
+    ref.invalidate(githubSearchPageState);
+  }
   final searchRepositoriesModel =
       ref.read(githubSearchPageState).searchRepositoriesModel;
   ref.watch(githubSearchPageState.notifier).state = GithubSearchPageState(
     query: query,
-    currentPage: page + 1,
+    currentPage: page,
     searchRepositoriesModel: searchRepositoriesModel.copyWith(
       totalCount: response.totalCount,
       items: [...searchRepositoriesModel.items, ...response.items],
