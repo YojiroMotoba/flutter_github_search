@@ -8,8 +8,6 @@ import './../widgets/search_bar.dart' as search_bar;
 import '../../data/model/github/search_repository_item_model.dart';
 import '../../image_cache_manager.dart';
 
-final _queryProvider = StateProvider((ref) => '');
-
 class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
 
@@ -18,7 +16,8 @@ class GithubSearchPage extends ConsumerWidget {
     return Scaffold(
       appBar: search_bar.SearchBar(
         onSubmitted: (String query) {
-          ref.watch(_queryProvider.notifier).state = query;
+          final notifier = ref.read(githubSearchPageState.notifier);
+          notifier.state = notifier.state.copyWith(query: query);
         },
       ),
       body: const _Body(),
@@ -31,7 +30,8 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final query = ref.watch(_queryProvider);
+    final query =
+        ref.watch(githubSearchPageState.select((value) => value.query));
     if (query.isEmpty) {
       return const Center(
         child: Text('Please enter a search term'),
@@ -48,9 +48,7 @@ class _Body extends ConsumerWidget {
           data: (_) {
             return const _GithubRepositoryList();
           },
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const _Loading(),
           error: (error, stackTrace) {
             debugPrint('error: $error');
             debugPrint('stackTrace: $stackTrace');
@@ -73,20 +71,16 @@ class _GithubRepositoryList extends ConsumerWidget {
       itemCount: items.length,
       itemBuilder: (context, index) {
         if (index == items.length - 1) {
+          final state = ref.read(githubSearchPageState);
           return ref
               .watch(
                 fetchRepositoriesProvider(
-                  query: ref.watch(_queryProvider),
-                  page: ref.watch(
-                    githubSearchPageState
-                        .select((value) => value.currentPage + 1),
-                  ),
+                  query: state.query,
+                  page: state.currentPage + 1,
                 ),
               )
               .when(
-                data: (_) {
-                  return const SizedBox.shrink();
-                },
+                data: (_) => const SizedBox.shrink(),
                 error: (error, stackTrace) {
                   debugPrint('error: $error');
                   debugPrint('stackTrace: $stackTrace');
@@ -94,9 +88,7 @@ class _GithubRepositoryList extends ConsumerWidget {
                     child: Text('error'),
                   );
                 },
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                loading: () => const _Loading(),
               );
         }
         final item = items[index];
@@ -196,6 +188,17 @@ class _AvatarImageContainer extends StatelessWidget {
       width: 50,
       height: 50,
       child: Center(child: child),
+    );
+  }
+}
+
+class _Loading extends StatelessWidget {
+  const _Loading();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

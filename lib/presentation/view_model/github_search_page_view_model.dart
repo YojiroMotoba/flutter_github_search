@@ -30,3 +30,4 @@ Future<void> fetchRepositories(
 
 final githubSearchPageState =
     StateProvider((ref) => const GithubSearchPageState());
+
