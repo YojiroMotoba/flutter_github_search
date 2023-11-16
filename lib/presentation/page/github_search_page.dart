@@ -45,10 +45,8 @@ class _Body extends ConsumerWidget {
           ),
         )
         .when(
-          data: (_) {
-            return const _GithubRepositoryList();
-          },
           loading: () => const _Loading(),
+          data: (_) => const _GithubRepositoryList(),
           error: (error, stackTrace) {
             debugPrint('error: $error');
             debugPrint('stackTrace: $stackTrace');
@@ -70,6 +68,10 @@ class _GithubRepositoryList extends ConsumerWidget {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
+        final item = items[index];
+        final listViewItem = _ListViewItem(
+          searchRepositoryItemModel: item,
+        );
         if (index == items.length - 1) {
           final state = ref.read(githubSearchPageState);
           return ref
@@ -80,7 +82,8 @@ class _GithubRepositoryList extends ConsumerWidget {
                 ),
               )
               .when(
-                data: (_) => const SizedBox.shrink(),
+                loading: () => const _Loading(),
+                data: (_) => listViewItem,
                 error: (error, stackTrace) {
                   debugPrint('error: $error');
                   debugPrint('stackTrace: $stackTrace');
@@ -88,13 +91,9 @@ class _GithubRepositoryList extends ConsumerWidget {
                     child: Text('error'),
                   );
                 },
-                loading: () => const _Loading(),
               );
         }
-        final item = items[index];
-        return _ListViewItem(
-          searchRepositoryItemModel: item,
-        );
+        return listViewItem;
       },
     );
   }
