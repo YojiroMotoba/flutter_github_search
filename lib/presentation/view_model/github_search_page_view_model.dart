@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_github_search/di.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,6 +10,7 @@ part 'github_search_page_view_model.g.dart';
 @riverpod
 Future<void> fetchRepositories(
   FetchRepositoriesRef ref, {
+  required Key key,
   required String query,
   required int page,
 }) async {
@@ -20,8 +22,8 @@ Future<void> fetchRepositories(
     ref.invalidate(githubSearchPageState);
   }
   final searchRepositoriesModel =
-      ref.read(githubSearchPageState).searchRepositoriesModel;
-  ref.watch(githubSearchPageState.notifier).state = GithubSearchPageState(
+      ref.read(githubSearchPageState(key)).searchRepositoriesModel;
+  ref.watch(githubSearchPageState(key).notifier).state = GithubSearchPageState(
     query: query,
     currentPage: page,
     searchRepositoriesModel: searchRepositoriesModel.copyWith(
@@ -31,6 +33,14 @@ Future<void> fetchRepositories(
   );
 }
 
-final githubSearchPageState =
-    StateProvider((ref) => const GithubSearchPageState());
+// final githubSearchPageState =
+//     StateProvider((ref) => const GithubSearchPageState());
 
+final githubSearchPageState = StateProvider.family<GithubSearchPageState, Key>(
+    (ref, id) => const GithubSearchPageState());
+
+// final githubSearchPageState = StateProvider.family<GithubSearchPageState, Key>(
+//         (ref, key) => throw UnimplementedError());
+
+// final githubSearchPageState = StateProvider.family<GithubSearchPageState, Key>(
+//         (ref, id) => const GithubSearchPageState());

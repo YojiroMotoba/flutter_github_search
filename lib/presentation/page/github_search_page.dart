@@ -6,7 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import './../widgets/search_bar.dart' as search_bar;
 import '../../data/model/github/search_repository_item_model.dart';
+import '../../di.dart';
 import '../../image_cache_manager.dart';
+import '../router.dart';
 
 class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
@@ -16,7 +18,8 @@ class GithubSearchPage extends ConsumerWidget {
     return Scaffold(
       appBar: search_bar.SearchBar(
         onSubmitted: (String query) {
-          final notifier = ref.read(githubSearchPageState.notifier);
+          final notifier = ref.read(
+              githubSearchPageState(ref.read(uniqueKeyProvider)).notifier);
           notifier.state = notifier.state.copyWith(query: query);
         },
       ),
@@ -30,16 +33,27 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final query =
-        ref.watch(githubSearchPageState.select((value) => value.query));
+    final query = ref.watch(githubSearchPageState(ref.read(uniqueKeyProvider))
+        .select((value) => value.query));
     if (query.isEmpty) {
-      return const Center(
-        child: Text('Please enter a search term'),
+      return Column(
+        children: [
+          const Center(
+            child: Text('Please enter a search term'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              const GithubSearchPageRoute().push(context);
+            },
+            child: const Text('next page'),
+          ),
+        ],
       );
     }
     return ref
         .watch(
           fetchRepositoriesProvider(
+            key: ref.read(uniqueKeyProvider),
             query: query,
             page: 1,
           ),
@@ -63,7 +77,8 @@ class _GithubRepositoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(githubSearchPageState
+    final uniqueKey = ref.read(uniqueKeyProvider);
+    final items = ref.watch(githubSearchPageState(uniqueKey)
         .select((value) => value.searchRepositoriesModel.items));
     return ListView.builder(
       itemCount: items.length,
@@ -73,10 +88,11 @@ class _GithubRepositoryList extends ConsumerWidget {
           searchRepositoryItemModel: item,
         );
         if (index == items.length - 1) {
-          final state = ref.read(githubSearchPageState);
+          final state = ref.read(githubSearchPageState(uniqueKey));
           return ref
               .watch(
                 fetchRepositoriesProvider(
+                  key: ref.read(uniqueKeyProvider),
                   query: state.query,
                   page: state.currentPage + 1,
                 ),
