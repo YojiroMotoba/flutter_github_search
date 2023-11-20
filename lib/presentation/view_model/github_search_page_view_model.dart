@@ -6,6 +6,9 @@ import '../state/github_search_page_state.dart';
 
 part 'github_search_page_view_model.g.dart';
 
+final githubSearchPageState =
+    StateProvider<GithubSearchPageState>((_) => throw UnimplementedError());
+
 @riverpod
 Future<void> fetchRepositories(
   FetchRepositoriesRef ref, {

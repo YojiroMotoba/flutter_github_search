@@ -6,8 +6,6 @@ import 'package:flutter_github_search/presentation/view_model/github_search_page
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../di.dart';
-
 part 'router.g.dart';
 
 final router = GoRouter(

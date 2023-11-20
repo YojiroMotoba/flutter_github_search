@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import './../widgets/search_bar.dart' as search_bar;
 import '../../data/model/github/search_repository_item_model.dart';
-import '../../di.dart';
 import '../../image_cache_manager.dart';
 import '../router.dart';
 
