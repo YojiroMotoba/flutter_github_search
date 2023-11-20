@@ -18,8 +18,7 @@ class GithubSearchPage extends ConsumerWidget {
     return Scaffold(
       appBar: search_bar.SearchBar(
         onSubmitted: (String query) {
-          final notifier = ref.read(
-              githubSearchPageState(ref.read(uniqueKeyProvider)).notifier);
+          final notifier = ref.read(githubSearchPageState.notifier);
           notifier.state = notifier.state.copyWith(query: query);
         },
       ),
@@ -33,8 +32,8 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final query = ref.watch(githubSearchPageState(ref.read(uniqueKeyProvider))
-        .select((value) => value.query));
+    final query =
+        ref.watch(githubSearchPageState.select((value) => value.query));
     if (query.isEmpty) {
       return Column(
         children: [
@@ -53,7 +52,6 @@ class _Body extends ConsumerWidget {
     return ref
         .watch(
           fetchRepositoriesProvider(
-            key: ref.read(uniqueKeyProvider),
             query: query,
             page: 1,
           ),
@@ -77,8 +75,7 @@ class _GithubRepositoryList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uniqueKey = ref.read(uniqueKeyProvider);
-    final items = ref.watch(githubSearchPageState(uniqueKey)
+    final items = ref.watch(githubSearchPageState
         .select((value) => value.searchRepositoriesModel.items));
     return ListView.builder(
       itemCount: items.length,
@@ -88,11 +85,10 @@ class _GithubRepositoryList extends ConsumerWidget {
           searchRepositoryItemModel: item,
         );
         if (index == items.length - 1) {
-          final state = ref.read(githubSearchPageState(uniqueKey));
+          final state = ref.read(githubSearchPageState);
           return ref
               .watch(
                 fetchRepositoriesProvider(
-                  key: ref.read(uniqueKeyProvider),
                   query: state.query,
                   page: state.currentPage + 1,
                 ),

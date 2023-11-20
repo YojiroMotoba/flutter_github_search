@@ -6,7 +6,7 @@ part of 'github_search_page_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fetchRepositoriesHash() => r'41e29c97f5328b9f68bf9e409cda17a7cebe9cbd';
+String _$fetchRepositoriesHash() => r'2694b45e9781efb768fdeacd88771e84b90140eb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,12 +40,10 @@ class FetchRepositoriesFamily extends Family<AsyncValue<void>> {
 
   /// See also [fetchRepositories].
   FetchRepositoriesProvider call({
-    required Key key,
     required String query,
     required int page,
   }) {
     return FetchRepositoriesProvider(
-      key: key,
       query: query,
       page: page,
     );
@@ -56,7 +54,6 @@ class FetchRepositoriesFamily extends Family<AsyncValue<void>> {
     covariant FetchRepositoriesProvider provider,
   ) {
     return call(
-      key: provider.key,
       query: provider.query,
       page: provider.page,
     );
@@ -81,13 +78,11 @@ class FetchRepositoriesFamily extends Family<AsyncValue<void>> {
 class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
   /// See also [fetchRepositories].
   FetchRepositoriesProvider({
-    required Key key,
     required String query,
     required int page,
   }) : this._internal(
           (ref) => fetchRepositories(
             ref as FetchRepositoriesRef,
-            key: key,
             query: query,
             page: page,
           ),
@@ -100,7 +95,6 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
           dependencies: FetchRepositoriesFamily._dependencies,
           allTransitiveDependencies:
               FetchRepositoriesFamily._allTransitiveDependencies,
-          key: key,
           query: query,
           page: page,
         );
@@ -112,12 +106,10 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.key,
     required this.query,
     required this.page,
   }) : super.internal();
 
-  final Key key;
   final String query;
   final int page;
 
@@ -134,7 +126,6 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        key: key,
         query: query,
         page: page,
       ),
@@ -149,7 +140,6 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
   @override
   bool operator ==(Object other) {
     return other is FetchRepositoriesProvider &&
-        other.key == key &&
         other.query == query &&
         other.page == page;
   }
@@ -157,7 +147,6 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, key.hashCode);
     hash = _SystemHash.combine(hash, query.hashCode);
     hash = _SystemHash.combine(hash, page.hashCode);
 
@@ -166,9 +155,6 @@ class FetchRepositoriesProvider extends AutoDisposeFutureProvider<void> {
 }
 
 mixin FetchRepositoriesRef on AutoDisposeFutureProviderRef<void> {
-  /// The parameter `key` of this provider.
-  Key get key;
-
   /// The parameter `query` of this provider.
   String get query;
 
@@ -180,8 +166,6 @@ class _FetchRepositoriesProviderElement
     extends AutoDisposeFutureProviderElement<void> with FetchRepositoriesRef {
   _FetchRepositoriesProviderElement(super.provider);
 
-  @override
-  Key get key => (origin as FetchRepositoriesProvider).key;
   @override
   String get query => (origin as FetchRepositoriesProvider).query;
   @override

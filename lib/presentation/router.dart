@@ -25,12 +25,15 @@ class GithubSearchPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return ProviderScope(
       overrides: [
-        // githubSearchPageState
-        //     .overrideWith((ref, arg) => const GithubSearchPageState()),
-        uniqueKeyProvider.overrideWith((ref) => UniqueKey()),
+        githubSearchPageState
+            .overrideWith((ref) => const GithubSearchPageState()),
+        fetchRepositoriesProvider,
       ],
-      child: const GithubSearchPage(),
+      child: Consumer(
+        builder: (_, __, ___) {
+          return const GithubSearchPage();
+        },
+      ),
     );
-    // return const GithubSearchPage();
   }
 }

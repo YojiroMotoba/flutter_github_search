@@ -9,6 +9,7 @@ abstract class GithubSearchPageState with _$GithubSearchPageState {
   const factory GithubSearchPageState({
     @Default('') String query,
     @Default(1) int currentPage,
-    @Default(SearchRepositoriesModel()) SearchRepositoriesModel searchRepositoriesModel,
+    @Default(SearchRepositoriesModel())
+    SearchRepositoriesModel searchRepositoriesModel,
   }) = _GithubSearchPageState;
 }
