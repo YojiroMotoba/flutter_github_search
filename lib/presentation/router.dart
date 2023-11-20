@@ -29,11 +29,7 @@ class GithubSearchPageRoute extends GoRouteData {
             .overrideWith((ref) => const GithubSearchPageState()),
         fetchRepositoriesProvider,
       ],
-      child: Consumer(
-        builder: (_, __, ___) {
-          return const GithubSearchPage();
-        },
-      ),
+      child: const GithubSearchPage(),
     );
   }
 }
