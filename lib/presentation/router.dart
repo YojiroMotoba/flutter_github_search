@@ -24,7 +24,7 @@ class GithubSearchPageRoute extends GoRouteData {
     return ProviderScope(
       overrides: [
         githubSearchPageState
-            .overrideWith((ref) => const GithubSearchPageState()),
+            .overrideWith((_) => const GithubSearchPageState()),
         fetchRepositoriesProvider,
       ],
       child: const GithubSearchPage(),

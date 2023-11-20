@@ -4,10 +4,10 @@ import 'package:flutter_github_search/presentation/view_model/github_search_page
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import './../widgets/search_bar.dart' as search_bar;
 import '../../data/model/github/search_repository_item_model.dart';
-import '../../image_cache_manager.dart';
+import '../image_cache_manager.dart';
 import '../router.dart';
+import './../widgets/search_bar.dart' as search_bar;
 
 class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
