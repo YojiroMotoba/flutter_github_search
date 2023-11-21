@@ -7,6 +7,6 @@ final searchRepository =
 
 final overrides = [
   searchRepository.overrideWith(
-    (ref) => ref.watch(Provider((ref) => SearchDao())),
+    (ref) => ref.watch(Provider((_) => SearchDao())),
   ),
 ];
