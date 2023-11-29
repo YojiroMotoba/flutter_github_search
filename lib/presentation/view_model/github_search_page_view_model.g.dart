@@ -6,7 +6,7 @@ part of 'github_search_page_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fetchRepositoriesHash() => r'2694b45e9781efb768fdeacd88771e84b90140eb';
+String _$fetchRepositoriesHash() => r'f82f4ac6ff0fcb63e2f378c8174ffd95e5c89e2f';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_search/presentation/page/github_repository_detail_page.dart';
 import 'package:flutter_github_search/presentation/page/github_search_page.dart';
 import 'package:flutter_github_search/presentation/page_path.dart';
 import 'package:flutter_github_search/presentation/state/github_search_page_state.dart';
@@ -29,5 +30,21 @@ class GithubSearchPageRoute extends GoRouteData {
       ],
       child: const GithubSearchPage(),
     );
+  }
+}
+
+@TypedGoRoute<GithubRepositoryDetailPageSearchPageRoute>(
+  path: PagePath.githubRepositoryDetail,
+)
+class GithubRepositoryDetailPageSearchPageRoute extends GoRouteData {
+  const GithubRepositoryDetailPageSearchPageRoute(
+    this.id,
+  );
+
+  final int id;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return GithubRepositoryDetailPage(id);
   }
 }

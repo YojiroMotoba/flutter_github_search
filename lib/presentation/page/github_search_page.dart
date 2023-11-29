@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_github_search/presentation/router.dart';
 import 'package:flutter_github_search/presentation/view_model/github_search_page_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/model/github/search_repository_item_model.dart';
 import '../image_cache_manager.dart';
-import '../page_path.dart';
 import './../widgets/search_bar.dart' as search_bar;
 
 class GithubSearchPage extends ConsumerWidget {
@@ -42,7 +41,7 @@ class _Body extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              context.push(PagePath.githubSearch);
+              const GithubSearchPageRoute().push(context);
             },
             child: const Text('next page'),
           ),
@@ -151,9 +150,30 @@ class _ListViewItem extends StatelessWidget {
               },
               child: const Text('Go to GitHub External Browser'),
             ),
+            _PushDetailPageButton(
+              id: searchRepositoryItemModel.id,
+            ),
           ],
         ),
       ],
+    );
+  }
+}
+
+class _PushDetailPageButton extends StatelessWidget {
+  const _PushDetailPageButton({
+    required this.id,
+  });
+
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        GithubRepositoryDetailPageSearchPageRoute(id).push(context);
+      },
+      child: const Text('detail page'),
     );
   }
 }
