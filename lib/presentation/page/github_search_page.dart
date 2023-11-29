@@ -138,17 +138,8 @@ class _ListViewItem extends StatelessWidget {
               language: searchRepositoryItemModel.language,
             ),
             const SizedBox(height: 16),
-            OutlinedButton(
-              onPressed: () async {
-                final url = searchRepositoryItemModel.htmlUrl;
-                if (!await launchUrl(
-                  Uri.parse(url),
-                  mode: LaunchMode.externalApplication,
-                )) {
-                  throw Exception('Could not launch $url');
-                }
-              },
-              child: const Text('Go to GitHub External Browser'),
+            _DetailPageLaunchExternalAppButton(
+              url: searchRepositoryItemModel.htmlUrl,
             ),
             _PushDetailPageButton(
               id: searchRepositoryItemModel.id,
@@ -156,6 +147,29 @@ class _ListViewItem extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _DetailPageLaunchExternalAppButton extends StatelessWidget {
+  const _DetailPageLaunchExternalAppButton({
+    required this.url,
+  });
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () async {
+        if (!await launchUrl(
+          Uri.parse(url),
+          mode: LaunchMode.externalApplication,
+        )) {
+          throw Exception('Could not launch $url');
+        }
+      },
+      child: const Text('Go to GitHub External Browser'),
     );
   }
 }
