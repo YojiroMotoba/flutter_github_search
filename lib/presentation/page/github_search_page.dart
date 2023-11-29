@@ -1,14 +1,14 @@
-import '../page_path.dart';
-import '../image_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_github_search/presentation/view_model/github_search_page_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-import './../widgets/search_bar.dart' as search_bar;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../../data/model/github/search_repository_item_model.dart';
-import 'package:flutter_github_search/presentation/view_model/github_search_page_view_model.dart';
 
+import '../../data/model/github/search_repository_item_model.dart';
+import '../image_cache_manager.dart';
+import '../page_path.dart';
+import './../widgets/search_bar.dart' as search_bar;
 
 class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
