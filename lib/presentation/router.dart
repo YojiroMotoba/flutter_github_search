@@ -37,9 +37,7 @@ class GithubSearchPageRoute extends GoRouteData {
   path: PagePath.githubRepositoryDetail,
 )
 class GithubRepositoryDetailPageSearchPageRoute extends GoRouteData {
-  const GithubRepositoryDetailPageSearchPageRoute(
-    this.id,
-  );
+  const GithubRepositoryDetailPageSearchPageRoute(this.id);
 
   final int id;
 
