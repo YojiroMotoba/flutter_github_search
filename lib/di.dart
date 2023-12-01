@@ -6,7 +6,5 @@ final searchRepository =
     Provider<SearchRepository>((_) => throw UnimplementedError());
 
 final overrides = [
-  searchRepository.overrideWith(
-    (ref) => ref.watch(Provider((_) => SearchDao())),
-  ),
+  searchRepository.overrideWith((_) => SearchDao()),
 ];
