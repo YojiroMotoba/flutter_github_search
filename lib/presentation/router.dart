@@ -7,12 +7,26 @@ import 'package:flutter_github_search/presentation/view_model/github_search_page
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'page/bottom_navigation_bar_page.dart';
+
 part 'router.g.dart';
 
 final router = GoRouter(
   debugLogDiagnostics: true,
   routes: $appRoutes,
 );
+
+@TypedGoRoute<BottomNavigationBarPageRoute>(
+  path: PagePath.bottomNavigationBarPage,
+)
+class BottomNavigationBarPageRoute extends GoRouteData {
+  const BottomNavigationBarPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const BottomNavigationBarPage();
+  }
+}
 
 @TypedGoRoute<GithubSearchPageRoute>(
   path: PagePath.githubSearch,

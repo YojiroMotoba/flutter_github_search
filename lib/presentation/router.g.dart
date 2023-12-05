@@ -7,12 +7,37 @@ part of 'router.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
+      $bottomNavigationBarPageRoute,
       $githubSearchPageRoute,
       $githubRepositoryDetailPageSearchPageRoute,
     ];
 
-RouteBase get $githubSearchPageRoute => GoRouteData.$route(
+RouteBase get $bottomNavigationBarPageRoute => GoRouteData.$route(
       path: '/',
+      factory: $BottomNavigationBarPageRouteExtension._fromState,
+    );
+
+extension $BottomNavigationBarPageRouteExtension
+    on BottomNavigationBarPageRoute {
+  static BottomNavigationBarPageRoute _fromState(GoRouterState state) =>
+      const BottomNavigationBarPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $githubSearchPageRoute => GoRouteData.$route(
+      path: '/search',
       factory: $GithubSearchPageRouteExtension._fromState,
     );
 
@@ -21,7 +46,7 @@ extension $GithubSearchPageRouteExtension on GithubSearchPageRoute {
       const GithubSearchPageRoute();
 
   String get location => GoRouteData.$location(
-        '/',
+        '/search',
       );
 
   void go(BuildContext context) => context.go(location);
