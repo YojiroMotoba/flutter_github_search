@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget implements PreferredSizeWidget {
   const SearchBar({
-    Key? key,
+    super.key,
     required this.onSubmitted,
-  }) : super(key: key);
+  });
 
   final ValueChanged<String> onSubmitted;
 

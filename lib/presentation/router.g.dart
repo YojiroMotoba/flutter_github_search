@@ -7,20 +7,50 @@ part of 'router.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $bottomNavigationBarPageRoute,
+      $bottomNavigationBarPageStatefulShellRoute,
       $githubSearchPageRoute,
       $githubRepositoryDetailPageSearchPageRoute,
     ];
 
-RouteBase get $bottomNavigationBarPageRoute => GoRouteData.$route(
-      path: '/',
-      factory: $BottomNavigationBarPageRouteExtension._fromState,
+RouteBase get $bottomNavigationBarPageStatefulShellRoute =>
+    StatefulShellRouteData.$route(
+      restorationScopeId:
+          BottomNavigationBarPageStatefulShellRoute.$restorationScopeId,
+      navigatorContainerBuilder:
+          BottomNavigationBarPageStatefulShellRoute.$navigatorContainerBuilder,
+      factory: $BottomNavigationBarPageStatefulShellRouteExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/',
+              factory: $InitialTabPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: BranchBData.$navigatorKey,
+          restorationScopeId: BranchBData.$restorationScopeId,
+          routes: [
+            GoRouteData.$route(
+              path: '/search',
+              factory: $GithubSearchPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
     );
 
-extension $BottomNavigationBarPageRouteExtension
-    on BottomNavigationBarPageRoute {
-  static BottomNavigationBarPageRoute _fromState(GoRouterState state) =>
-      const BottomNavigationBarPageRoute();
+extension $BottomNavigationBarPageStatefulShellRouteExtension
+    on BottomNavigationBarPageStatefulShellRoute {
+  static BottomNavigationBarPageStatefulShellRoute _fromState(
+          GoRouterState state) =>
+      const BottomNavigationBarPageStatefulShellRoute();
+}
+
+extension $InitialTabPageRouteExtension on InitialTabPageRoute {
+  static InitialTabPageRoute _fromState(GoRouterState state) =>
+      const InitialTabPageRoute();
 
   String get location => GoRouteData.$location(
         '/',
@@ -35,11 +65,6 @@ extension $BottomNavigationBarPageRouteExtension
 
   void replace(BuildContext context) => context.replace(location);
 }
-
-RouteBase get $githubSearchPageRoute => GoRouteData.$route(
-      path: '/search',
-      factory: $GithubSearchPageRouteExtension._fromState,
-    );
 
 extension $GithubSearchPageRouteExtension on GithubSearchPageRoute {
   static GithubSearchPageRoute _fromState(GoRouterState state) =>
@@ -58,6 +83,11 @@ extension $GithubSearchPageRouteExtension on GithubSearchPageRoute {
 
   void replace(BuildContext context) => context.replace(location);
 }
+
+RouteBase get $githubSearchPageRoute => GoRouteData.$route(
+      path: '/search',
+      factory: $GithubSearchPageRouteExtension._fromState,
+    );
 
 RouteBase get $githubRepositoryDetailPageSearchPageRoute => GoRouteData.$route(
       path: '/detail/:id',
