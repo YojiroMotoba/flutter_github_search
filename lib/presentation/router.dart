@@ -17,24 +17,20 @@ final router = GoRouter(
   routes: $appRoutes,
 );
 
-final GlobalKey<NavigatorState> _sectionANavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
-
 @TypedStatefulShellRoute<BottomNavigationBarPageStatefulShellRoute>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
-    TypedStatefulShellBranch<BranchAData>(
+    TypedStatefulShellBranch<StatefulShellBranchData>(
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<InitialTabPageRoute>(path: PagePath.initialTabPage),
       ],
     ),
-    TypedStatefulShellBranch<BranchBData>(
+    TypedStatefulShellBranch<StatefulShellBranchData>(
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<GithubSearchPageRoute>(path: PagePath.githubSearch),
       ],
     ),
   ],
 )
-
 class BottomNavigationBarPageStatefulShellRoute extends StatefulShellRouteData {
   const BottomNavigationBarPageStatefulShellRoute();
 
@@ -58,17 +54,6 @@ class BottomNavigationBarPageStatefulShellRoute extends StatefulShellRouteData {
   }
 }
 
-class BranchAData extends StatefulShellBranchData {
-  const BranchAData();
-}
-
-class BranchBData extends StatefulShellBranchData {
-  const BranchBData();
-
-  static final GlobalKey<NavigatorState> $navigatorKey = _sectionANavigatorKey;
-  static const String $restorationScopeId = 'restorationScopeId';
-}
-
 class InitialTabPageRoute extends GoRouteData {
   const InitialTabPageRoute();
 
@@ -78,9 +63,6 @@ class InitialTabPageRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<GithubSearchPageRoute>(
-  path: PagePath.githubSearch,
-)
 class GithubSearchPageRoute extends GoRouteData {
   const GithubSearchPageRoute();
 

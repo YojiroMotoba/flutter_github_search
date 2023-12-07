@@ -8,7 +8,6 @@ part of 'router.dart';
 
 List<RouteBase> get $appRoutes => [
       $bottomNavigationBarPageStatefulShellRoute,
-      $githubSearchPageRoute,
       $githubRepositoryDetailPageSearchPageRoute,
     ];
 
@@ -29,8 +28,6 @@ RouteBase get $bottomNavigationBarPageStatefulShellRoute =>
           ],
         ),
         StatefulShellBranchData.$branch(
-          navigatorKey: BranchBData.$navigatorKey,
-          restorationScopeId: BranchBData.$restorationScopeId,
           routes: [
             GoRouteData.$route(
               path: '/search',
@@ -83,11 +80,6 @@ extension $GithubSearchPageRouteExtension on GithubSearchPageRoute {
 
   void replace(BuildContext context) => context.replace(location);
 }
-
-RouteBase get $githubSearchPageRoute => GoRouteData.$route(
-      path: '/search',
-      factory: $GithubSearchPageRouteExtension._fromState,
-    );
 
 RouteBase get $githubRepositoryDetailPageSearchPageRoute => GoRouteData.$route(
       path: '/detail/:id',
