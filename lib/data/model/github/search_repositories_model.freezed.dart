@@ -141,7 +141,7 @@ class _$SearchRepositoriesModelImpl implements _SearchRepositoriesModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchRepositoriesModelImpl &&
