@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../router.dart';
+
 class GithubRepositoryDetailPage extends ConsumerWidget {
   const GithubRepositoryDetailPage(this._id, {super.key});
 
@@ -24,6 +26,29 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Text('Github Repository Detail $_id');
+    return Column(
+      children: [
+        Text('Github Repository Detail $_id'),
+        _PushDetailPageButton(id: _id),
+      ],
+    );
+  }
+}
+
+class _PushDetailPageButton extends StatelessWidget {
+  const _PushDetailPageButton({
+    required this.id,
+  });
+
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        const EmptyPageRoute().push(context);
+      },
+      child: const Text('empty page'),
+    );
   }
 }

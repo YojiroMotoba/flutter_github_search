@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_search/presentation/page/empty_page.dart';
 import 'package:flutter_github_search/presentation/page/github_repository_detail_page.dart';
 import 'package:flutter_github_search/presentation/page/github_search_page.dart';
 import 'package:flutter_github_search/presentation/page/initial_tab_page.dart';
@@ -12,9 +13,13 @@ import 'page/bottom_navigation_bar_page.dart';
 
 part 'router.g.dart';
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
+
 final router = GoRouter(
   debugLogDiagnostics: true,
   routes: $appRoutes,
+  navigatorKey: rootNavigatorKey,
 );
 
 @TypedStatefulShellRoute<BottomNavigationBarPageStatefulShellRoute>(
@@ -24,7 +29,7 @@ final router = GoRouter(
         TypedGoRoute<InitialTabPageRoute>(path: PagePath.initialTabPage),
       ],
     ),
-    TypedStatefulShellBranch<StatefulShellBranchData>(
+    TypedStatefulShellBranch<BranchData>(
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<GithubSearchPageRoute>(path: PagePath.githubSearch),
       ],
@@ -52,6 +57,12 @@ class BottomNavigationBarPageStatefulShellRoute extends StatefulShellRouteData {
       children: children,
     );
   }
+}
+
+class BranchData extends StatefulShellBranchData {
+  const BranchData();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
 }
 
 class InitialTabPageRoute extends GoRouteData {
@@ -90,5 +101,19 @@ class GithubRepositoryDetailPageSearchPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return GithubRepositoryDetailPage(id);
+  }
+}
+
+@TypedGoRoute<EmptyPageRoute>(
+  path: PagePath.emptyPage,
+)
+class EmptyPageRoute extends GoRouteData {
+  const EmptyPageRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const EmptyPage();
   }
 }
