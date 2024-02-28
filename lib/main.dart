@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'di.dart';
 
 void main() {
-  runApp(
+  runApp( 
     ProviderScope(
       overrides: overrides,
       child: const MyApp(),
