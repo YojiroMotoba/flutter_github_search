@@ -10,6 +10,7 @@ List<RouteBase> get $appRoutes => [
       $bottomNavigationBarPageStatefulShellRoute,
       $githubRepositoryDetailPageSearchPageRoute,
       $emptyPageRoute,
+      $loggerTestPageRoute,
     ];
 
 RouteBase get $bottomNavigationBarPageStatefulShellRoute =>
@@ -122,6 +123,30 @@ extension $EmptyPageRouteExtension on EmptyPageRoute {
 
   String get location => GoRouteData.$location(
         '/empty',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $loggerTestPageRoute => GoRouteData.$route(
+      path: '/loggerTest',
+      parentNavigatorKey: LoggerTestPageRoute.$parentNavigatorKey,
+      factory: $LoggerTestPageRouteExtension._fromState,
+    );
+
+extension $LoggerTestPageRouteExtension on LoggerTestPageRoute {
+  static LoggerTestPageRoute _fromState(GoRouterState state) =>
+      const LoggerTestPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/loggerTest',
       );
 
   void go(BuildContext context) => context.go(location);

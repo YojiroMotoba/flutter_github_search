@@ -3,4 +3,5 @@ class PagePath {
   static const String githubSearch = '/search';
   static const String githubRepositoryDetail = '/detail/:id';
   static const String emptyPage = '/empty';
+  static const String loggerTestPage = '/loggerTest';
 }

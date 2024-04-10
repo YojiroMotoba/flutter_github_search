@@ -3,6 +3,7 @@ import 'package:flutter_github_search/presentation/page/empty_page.dart';
 import 'package:flutter_github_search/presentation/page/github_repository_detail_page.dart';
 import 'package:flutter_github_search/presentation/page/github_search_page.dart';
 import 'package:flutter_github_search/presentation/page/initial_tab_page.dart';
+import 'package:flutter_github_search/presentation/page/logger_test_page.dart';
 import 'package:flutter_github_search/presentation/page_path.dart';
 import 'package:flutter_github_search/presentation/state/github_search_page_state.dart';
 import 'package:flutter_github_search/presentation/view_model/github_search_page_view_model.dart';
@@ -115,5 +116,19 @@ class EmptyPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const EmptyPage();
+  }
+}
+
+@TypedGoRoute<LoggerTestPageRoute>(
+  path: PagePath.loggerTestPage,
+)
+class LoggerTestPageRoute extends GoRouteData {
+  const LoggerTestPageRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const LoggerTestPage();
   }
 }

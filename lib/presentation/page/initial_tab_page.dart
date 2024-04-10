@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_search/presentation/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InitialTabPage extends ConsumerWidget {
@@ -20,6 +21,20 @@ class _Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Text('Initial Tab Page');
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Center(
+            child: Text('This is initial page.'),
+          ),
+          OutlinedButton(
+            child: const Text('log test page'),
+            onPressed: () {
+              const LoggerTestPageRoute().push(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
