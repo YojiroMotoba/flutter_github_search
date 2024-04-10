@@ -15,6 +15,8 @@ import 'page/bottom_navigation_bar_page.dart';
 part 'router.g.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> shellNavigatorAKey =
+    GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
@@ -25,7 +27,7 @@ final router = GoRouter(
 
 @TypedStatefulShellRoute<BottomNavigationBarPageStatefulShellRoute>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
-    TypedStatefulShellBranch<StatefulShellBranchData>(
+    TypedStatefulShellBranch<BranchAData>(
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<InitialTabPageRoute>(path: PagePath.initialTabPage),
       ],
@@ -60,10 +62,17 @@ class BottomNavigationBarPageStatefulShellRoute extends StatefulShellRouteData {
   }
 }
 
+class BranchAData extends StatefulShellBranchData {
+  const BranchAData();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorAKey;
+}
+
 class BranchData extends StatefulShellBranchData {
   const BranchData();
 
   static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
+  static const String $restorationScopeId = 'restorationScopeId';
 }
 
 class InitialTabPageRoute extends GoRouteData {

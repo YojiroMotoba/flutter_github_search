@@ -53,10 +53,13 @@ class _AnimatedBranchContainer extends StatelessWidget {
     return Stack(
         children: children.mapIndexed(
       (int index, Widget child) {
-        return AnimatedOpacity(
-          opacity: index == currentIndex ? 1 : 0,
-          duration: const Duration(milliseconds: 200),
-          child: child,
+        return IgnorePointer(
+          ignoring: index != currentIndex,
+          child: AnimatedOpacity(
+            opacity: index == currentIndex ? 1 : 0,
+            duration: const Duration(milliseconds: 200),
+            child: child,
+          ),
         );
       },
     ).toList());

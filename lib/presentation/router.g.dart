@@ -22,6 +22,7 @@ RouteBase get $bottomNavigationBarPageStatefulShellRoute =>
       factory: $BottomNavigationBarPageStatefulShellRouteExtension._fromState,
       branches: [
         StatefulShellBranchData.$branch(
+          navigatorKey: BranchAData.$navigatorKey,
           routes: [
             GoRouteData.$route(
               path: '/',
@@ -31,6 +32,7 @@ RouteBase get $bottomNavigationBarPageStatefulShellRoute =>
         ),
         StatefulShellBranchData.$branch(
           navigatorKey: BranchData.$navigatorKey,
+          restorationScopeId: BranchData.$restorationScopeId,
           routes: [
             GoRouteData.$route(
               path: '/search',
