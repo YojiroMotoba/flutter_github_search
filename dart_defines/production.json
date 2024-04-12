@@ -1,0 +1,6 @@
+{
+    "flavor": "production",
+    "appName": "Flutter Github Search",
+    "appId": "com.example.flutterGithubSearch",
+    "appIdSuffix": ""
+}

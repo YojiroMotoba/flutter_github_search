@@ -137,3 +137,5 @@ app.*.symbols
 !.vscode/settings.json
 
 vendor/
+
+**/ios/Flutter/Dart-Defines.xcconfig
